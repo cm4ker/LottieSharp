@@ -3,7 +3,7 @@ using LottieSharp.Model.Content;
 
 namespace LottieSharp.Parser
 {
-    static class ContentModelParser
+    internal static class ContentModelParser
     {
         internal static IContentModel Parse(JsonReader reader, LottieComposition composition)
         {
@@ -13,9 +13,8 @@ namespace LottieSharp.Parser
             // Unfortunately, for an ellipse, d is before "ty" which means that it will get parsed 
             // before we are in the ellipse parser. 
             // "d" is 2 for normal and 3 for reversed. 
-            int d = 2;
+            var d = 2;
             while (reader.HasNext())
-            {
                 switch (reader.NextName())
                 {
                     case "ty":
@@ -28,13 +27,10 @@ namespace LottieSharp.Parser
                         reader.SkipValue();
                         break;
                 }
-            }
+
             typeLoop:
 
-            if (type == null)
-            {
-                return null;
-            }
+            if (type == null) return null;
 
             IContentModel model = null;
             switch (type)
@@ -75,8 +71,8 @@ namespace LottieSharp.Parser
                 case "mm":
                     model = MergePathsParser.Parse(reader);
                     composition.AddWarning("Animation contains merge paths. Merge paths are only " +
-                        "supported on KitKat+ and must be manually enabled by calling " +
-                        "enableMergePathsForKitKatAndAbove().");
+                                           "supported on KitKat+ and must be manually enabled by calling " +
+                                           "enableMergePathsForKitKatAndAbove().");
                     break;
                 case "rp":
                     model = RepeaterParser.Parse(reader, composition);
@@ -86,10 +82,7 @@ namespace LottieSharp.Parser
                     break;
             }
 
-            while (reader.HasNext())
-            {
-                reader.SkipValue();
-            }
+            while (reader.HasNext()) reader.SkipValue();
             reader.EndObject();
 
             return model;

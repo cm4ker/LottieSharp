@@ -1,21 +1,19 @@
 ﻿using System.Numerics;
-using SharpDX;
 using LottieSharp.Model.Animatable;
 using LottieSharp.Model.Content;
 
 namespace LottieSharp.Parser
 {
-    static class CircleShapeParser
+    internal static class CircleShapeParser
     {
         internal static CircleShape Parse(JsonReader reader, LottieComposition composition, int d)
         {
             string name = null;
             IAnimatableValue<Vector2?, Vector2?> position = null;
             AnimatablePointValue size = null;
-            bool reversed = d == 3;
+            var reversed = d == 3;
 
             while (reader.HasNext())
-            {
                 switch (reader.NextName())
                 {
                     case "nm":
@@ -35,7 +33,6 @@ namespace LottieSharp.Parser
                         reader.SkipValue();
                         break;
                 }
-            }
 
             return new CircleShape(name, position, size, reversed);
         }

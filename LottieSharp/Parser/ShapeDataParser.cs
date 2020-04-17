@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using SharpDX;
 using LottieSharp.Model;
 using LottieSharp.Model.Content;
 using Newtonsoft.Json;
@@ -17,19 +16,15 @@ namespace LottieSharp.Parser
         {
             // Sometimes the points data is in a array of length 1. Sometimes the data is at the top 
             // level. 
-            if (reader.Peek() == JsonToken.StartArray)
-            {
-                reader.BeginArray();
-            }
+            if (reader.Peek() == JsonToken.StartArray) reader.BeginArray();
 
-            bool closed = false;
+            var closed = false;
             List<Vector2> pointsArray = null;
             List<Vector2> inTangents = null;
             List<Vector2> outTangents = null;
             reader.BeginObject();
 
             while (reader.HasNext())
-            {
                 switch (reader.NextName())
                 {
                     case "c":
@@ -45,31 +40,22 @@ namespace LottieSharp.Parser
                         outTangents = JsonUtils.JsonToPoints(reader, scale);
                         break;
                 }
-            }
 
             reader.EndObject();
 
-            if (reader.Peek() == JsonToken.EndArray)
-            {
-                reader.EndArray();
-            }
+            if (reader.Peek() == JsonToken.EndArray) reader.EndArray();
 
             if (pointsArray == null || inTangents == null || outTangents == null)
-            {
                 throw new ArgumentException("Shape data was missing information.");
-            }
 
-            if (!pointsArray.Any())
-            {
-                return new ShapeData(new Vector2(), false, new List<CubicCurveData>());
-            }
+            if (!pointsArray.Any()) return new ShapeData(new Vector2(), false, new List<CubicCurveData>());
 
-            int length = pointsArray.Count;
+            var length = pointsArray.Count;
             var vertex = pointsArray[0];
             var initialPoint = vertex;
-            List<CubicCurveData> curves = new List<CubicCurveData>(length);
+            var curves = new List<CubicCurveData>(length);
 
-            for (int i = 1; i < length; i++)
+            for (var i = 1; i < length; i++)
             {
                 vertex = pointsArray[i];
                 var previousVertex = pointsArray[i - 1];
@@ -92,6 +78,7 @@ namespace LottieSharp.Parser
 
                 curves.Add(new CubicCurveData(shapeCp1, shapeCp2, vertex));
             }
+
             return new ShapeData(initialPoint, closed, curves);
         }
     }

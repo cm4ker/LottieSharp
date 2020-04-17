@@ -3,18 +3,17 @@ using LottieSharp.Model.Content;
 
 namespace LottieSharp.Parser
 {
-    static class ShapeFillParser
+    internal static class ShapeFillParser
     {
         internal static ShapeFill Parse(JsonReader reader, LottieComposition composition)
         {
             AnimatableColorValue color = null;
-            bool fillEnabled = false;
+            var fillEnabled = false;
             AnimatableIntegerValue opacity = null;
             string name = null;
-            int fillTypeInt = 1;
+            var fillTypeInt = 1;
 
             while (reader.HasNext())
-            {
                 switch (reader.NextName())
                 {
                     case "nm":
@@ -36,7 +35,6 @@ namespace LottieSharp.Parser
                         reader.SkipValue();
                         break;
                 }
-            }
 
             var fillType = fillTypeInt == 1 ? PathFillType.Winding : PathFillType.EvenOdd;
             return new ShapeFill(name, fillEnabled, fillType, color, opacity);

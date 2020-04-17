@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using SharpDX;
 using LottieSharp.Animation.Content;
 using LottieSharp.Model.Animatable;
 using LottieSharp.Model.Layer;

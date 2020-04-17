@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using SharpDX;
 using LottieSharp.Model.Content;
 using LottieSharp.Utils;
 using Newtonsoft.Json;
@@ -107,21 +106,17 @@ namespace LottieSharp.Parser
        * 
        * This should be a good approximation is nearly all cases. However, if there are many more 
        * opacity stops than color stops, information will be lost. 
-       */
+         */
         private void AddOpacityStopsToGradientIfNeeded(GradientColor gradientColor, List<float> array)
         {
-            int startIndex = _colorPoints * 4;
-            if (array.Count <= startIndex)
-            {
-                return;
-            }
+            var startIndex = _colorPoints * 4;
+            if (array.Count <= startIndex) return;
 
-            int opacityStops = (array.Count - startIndex) / 2;
-            double[] positions = new double[opacityStops];
-            double[] opacities = new double[opacityStops];
+            var opacityStops = (array.Count - startIndex) / 2;
+            var positions = new double[opacityStops];
+            var opacities = new double[opacityStops];
 
             for (int i = startIndex, j = 0; i < array.Count; i++)
-            {
                 if (i % 2 == 0)
                 {
                     positions[j] = array[i];
@@ -131,26 +126,25 @@ namespace LottieSharp.Parser
                     opacities[j] = array[i];
                     j++;
                 }
-            }
 
-            for (int i = 0; i < gradientColor.Size; i++)
+            for (var i = 0; i < gradientColor.Size; i++)
             {
-                Color color = gradientColor.Colors[i];
-                color = Color.FromArgb((byte) GetOpacityAtPosition(gradientColor.Positions[i], positions, opacities),
-                    (byte) color.R, (byte) color.G, (byte) color.B);
+                var color = gradientColor.Colors[i];
+                color = Color.FromArgb(GetOpacityAtPosition(gradientColor.Positions[i], positions, opacities),
+                    color.R, color.G, color.B);
                 gradientColor.Colors[i] = color;
             }
         }
 
         private byte GetOpacityAtPosition(double position, double[] positions, double[] opacities)
         {
-            for (int i = 1; i < positions.Length; i++)
+            for (var i = 1; i < positions.Length; i++)
             {
-                double lastPosition = positions[i - 1];
-                double thisPosition = positions[i];
+                var lastPosition = positions[i - 1];
+                var thisPosition = positions[i];
                 if (positions[i] >= position)
                 {
-                    double progress = (position - lastPosition) / (thisPosition - lastPosition);
+                    var progress = (position - lastPosition) / (thisPosition - lastPosition);
                     return (byte) (255 * MiscUtils.Lerp(opacities[i - 1], opacities[i], progress));
                 }
             }

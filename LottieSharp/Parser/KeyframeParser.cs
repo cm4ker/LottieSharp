@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
-using SharpDX;
-using LottieSharp.Value;
 using LottieSharp.Utils;
+using LottieSharp.Value;
 
 namespace LottieSharp.Parser
 {
-    static class KeyframeParser
+    internal static class KeyframeParser
     {
         /// <summary>
-        /// Some animations get exported with insane cp values in the tens of thousands. 
-        /// PathInterpolator fails to create the interpolator in those cases and hangs. 
-        /// Clamping the cp helps prevent that. 
+        ///     Some animations get exported with insane cp values in the tens of thousands.
+        ///     PathInterpolator fails to create the interpolator in those cases and hangs.
+        ///     Clamping the cp helps prevent that.
         /// </summary>
         private const float MaxCpValue = 100;
+
         private static readonly IInterpolator LinearInterpolator = new LinearInterpolator();
 
         private static readonly object Lock = new object();
@@ -23,7 +23,8 @@ namespace LottieSharp.Parser
         // https://github.com/airbnb/lottie-android/issues/464 
         private static Dictionary<int, WeakReference<IInterpolator>> PathInterpolatorCache()
         {
-            return _pathInterpolatorCache ?? (_pathInterpolatorCache = new Dictionary<int, WeakReference<IInterpolator>>());
+            return _pathInterpolatorCache ??
+                   (_pathInterpolatorCache = new Dictionary<int, WeakReference<IInterpolator>>());
         }
 
         private static bool GetInterpolator(int hash, out WeakReference<IInterpolator> interpolatorRef)
@@ -46,18 +47,16 @@ namespace LottieSharp.Parser
             }
         }
 
-        internal static Keyframe<T> Parse<T>(JsonReader reader, LottieComposition composition, float scale, IValueParser<T> valueParser, bool animated)
+        internal static Keyframe<T> Parse<T>(JsonReader reader, LottieComposition composition, float scale,
+            IValueParser<T> valueParser, bool animated)
         {
-            if (animated)
-            {
-                return ParseKeyframe(composition, reader, scale, valueParser);
-            }
+            if (animated) return ParseKeyframe(composition, reader, scale, valueParser);
             return ParseStaticValue(reader, scale, valueParser);
         }
 
         /// <summary>
-        /// beginObject will already be called on the keyframe so it can be differentiated with 
-        /// a non animated value.
+        ///     beginObject will already be called on the keyframe so it can be differentiated with
+        ///     a non animated value.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="composition"></param>
@@ -65,14 +64,15 @@ namespace LottieSharp.Parser
         /// <param name="scale"></param>
         /// <param name="valueParser"></param>
         /// <returns></returns>
-        private static Keyframe<T> ParseKeyframe<T>(LottieComposition composition, JsonReader reader, float scale, IValueParser<T> valueParser)
+        private static Keyframe<T> ParseKeyframe<T>(LottieComposition composition, JsonReader reader, float scale,
+            IValueParser<T> valueParser)
         {
             Vector2? cp1 = null;
             Vector2? cp2 = null;
             float startFrame = 0;
-            T startValue = default(T);
-            T endValue = default(T);
-            bool hold = false;
+            T startValue = default;
+            var endValue = default(T);
+            var hold = false;
             IInterpolator interpolator;
 
             // Only used by PathKeyframe 
@@ -81,7 +81,6 @@ namespace LottieSharp.Parser
 
             reader.BeginObject();
             while (reader.HasNext())
-            {
                 switch (reader.NextName())
                 {
                     case "t":
@@ -112,7 +111,7 @@ namespace LottieSharp.Parser
                         reader.SkipValue();
                         break;
                 }
-            }
+
             reader.EndObject();
 
             if (hold)
@@ -128,11 +127,12 @@ namespace LottieSharp.Parser
                 cp2 = new Vector2(MiscUtils.Clamp(cp2.Value.X, -scale, scale),
                     MiscUtils.Clamp(cp2.Value.Y, -MaxCpValue, MaxCpValue));
 
-                int hash = Utils.Utils.HashFor(cp1.Value.X, cp1.Value.Y, cp2.Value.X, cp2.Value.Y);
+                var hash = Utils.Utils.HashFor(cp1.Value.X, cp1.Value.Y, cp2.Value.X, cp2.Value.Y);
                 if (GetInterpolator(hash, out var interpolatorRef) == false ||
                     interpolatorRef.TryGetTarget(out interpolator) == false)
                 {
-                    interpolator = new PathInterpolator(cp1.Value.X / scale, cp1.Value.Y / scale, cp2.Value.X / scale, cp2.Value.Y / scale);
+                    interpolator = new PathInterpolator(cp1.Value.X / scale, cp1.Value.Y / scale, cp2.Value.X / scale,
+                        cp2.Value.Y / scale);
                     try
                     {
                         PutInterpolator(hash, new WeakReference<IInterpolator>(interpolator));
@@ -161,7 +161,7 @@ namespace LottieSharp.Parser
 
         private static Keyframe<T> ParseStaticValue<T>(JsonReader reader, float scale, IValueParser<T> valueParser)
         {
-            T value = valueParser.Parse(reader, scale);
+            var value = valueParser.Parse(reader, scale);
             return new Keyframe<T>(value);
         }
     }

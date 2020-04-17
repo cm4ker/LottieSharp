@@ -8,7 +8,6 @@ using LottieSharp.Model.Animatable;
 using LottieSharp.Model.Content;
 using LottieSharp.Model.Layer;
 using LottieSharp.Value;
-using SharpDX;
 
 namespace LottieSharp.Animation.Content
 {

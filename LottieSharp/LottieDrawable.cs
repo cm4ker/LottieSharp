@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Windows.Controls;
 using LottieSharp.WpfSurface;
 using LottieSharp.Animation.Content;
 using LottieSharp.Manager;
@@ -12,7 +11,6 @@ using LottieSharp.Model.Layer;
 using LottieSharp.Parser;
 using LottieSharp.Utils;
 using LottieSharp.Value;
-using SharpDX;
 using SharpDX.Direct2D1;
 using Bitmap = SharpDX.Direct2D1.Bitmap;
 

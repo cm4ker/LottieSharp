@@ -1,11 +1,10 @@
 ﻿using System.Numerics;
-using SharpDX;
 using LottieSharp.Model.Animatable;
 using LottieSharp.Model.Content;
 
 namespace LottieSharp.Parser
 {
-    static class RectangleShapeParser
+    internal static class RectangleShapeParser
     {
         internal static RectangleShape Parse(JsonReader reader, LottieComposition composition)
         {
@@ -15,7 +14,6 @@ namespace LottieSharp.Parser
             AnimatableFloatValue roundedness = null;
 
             while (reader.HasNext())
-            {
                 switch (reader.NextName())
                 {
                     case "nm":
@@ -34,7 +32,6 @@ namespace LottieSharp.Parser
                         reader.SkipValue();
                         break;
                 }
-            }
 
             return new RectangleShape(name, position, size, roundedness);
         }

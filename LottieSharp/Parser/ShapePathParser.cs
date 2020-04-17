@@ -3,16 +3,15 @@ using LottieSharp.Model.Content;
 
 namespace LottieSharp.Parser
 {
-    static class ShapePathParser
+    internal static class ShapePathParser
     {
         internal static ShapePath Parse(JsonReader reader, LottieComposition composition)
         {
             string name = null;
-            int ind = 0;
+            var ind = 0;
             AnimatableShapeValue shape = null;
 
             while (reader.HasNext())
-            {
                 switch (reader.NextName())
                 {
                     case "nm":
@@ -28,7 +27,6 @@ namespace LottieSharp.Parser
                         reader.SkipValue();
                         break;
                 }
-            }
 
             return new ShapePath(name, ind, shape);
         }

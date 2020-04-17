@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Numerics;
 using SharpDX;
 using SharpDX.Direct2D1;
 using SharpDX.DirectWrite;
-using SharpDX.DXGI;
 using SharpDX.Mathematics.Interop;
 using Bitmap = SharpDX.Direct2D1.Bitmap;
 

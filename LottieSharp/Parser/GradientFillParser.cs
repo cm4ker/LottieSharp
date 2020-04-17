@@ -3,30 +3,28 @@ using LottieSharp.Model.Content;
 
 namespace LottieSharp.Parser
 {
-    static class GradientFillParser
+    internal static class GradientFillParser
     {
         internal static GradientFill Parse(JsonReader reader, LottieComposition composition)
         {
             string name = null;
             AnimatableGradientColorValue color = null;
             AnimatableIntegerValue opacity = null;
-            GradientType gradientType = GradientType.Linear;
+            var gradientType = GradientType.Linear;
             AnimatablePointValue startPoint = null;
             AnimatablePointValue endPoint = null;
-            PathFillType fillType = PathFillType.EvenOdd;
+            var fillType = PathFillType.EvenOdd;
 
             while (reader.HasNext())
-            {
                 switch (reader.NextName())
                 {
                     case "nm":
                         name = reader.NextString();
                         break;
                     case "g":
-                        int points = -1;
+                        var points = -1;
                         reader.BeginObject();
                         while (reader.HasNext())
-                        {
                             switch (reader.NextName())
                             {
                                 case "p":
@@ -39,7 +37,7 @@ namespace LottieSharp.Parser
                                     reader.SkipValue();
                                     break;
                             }
-                        }
+
                         reader.EndObject();
                         break;
                     case "o":
@@ -61,10 +59,9 @@ namespace LottieSharp.Parser
                         reader.SkipValue();
                         break;
                 }
-            }
 
             return new GradientFill(
-            name, gradientType, fillType, color, opacity, startPoint, endPoint, null, null);
+                name, gradientType, fillType, color, opacity, startPoint, endPoint, null, null);
         }
     }
 }

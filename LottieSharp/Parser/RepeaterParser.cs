@@ -3,7 +3,7 @@ using LottieSharp.Model.Content;
 
 namespace LottieSharp.Parser
 {
-    static class RepeaterParser
+    internal static class RepeaterParser
     {
         internal static Repeater Parse(JsonReader reader, LottieComposition composition)
         {
@@ -13,7 +13,6 @@ namespace LottieSharp.Parser
             AnimatableTransform transform = null;
 
             while (reader.HasNext())
-            {
                 switch (reader.NextName())
                 {
                     case "nm":
@@ -32,7 +31,6 @@ namespace LottieSharp.Parser
                         reader.SkipValue();
                         break;
                 }
-            }
 
             return new Repeater(name, copies, offset, transform);
         }

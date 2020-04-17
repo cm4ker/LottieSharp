@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using SharpDX;
 using LottieSharp.Animation.Keyframe;
 
 namespace LottieSharp.Model.Animatable

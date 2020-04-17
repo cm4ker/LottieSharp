@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Globalization;
 using System.Text;
-using SharpDX;
 using LottieSharp.Value;
 using LottieSharp.Model.Animatable;
 using LottieSharp.Model.Content;

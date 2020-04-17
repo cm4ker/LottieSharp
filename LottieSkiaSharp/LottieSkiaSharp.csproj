@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>7.1</LangVersion>
+    <Authors>yinyue200.com</Authors>
+    <Company />
+    <PackageLicenseUrl>https://github.com/yinyue200/LottieSkiaSharp/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>2.8</Version>
+    <Description>Copyright 2018 yinyue200.com</Description>
+    <PackageProjectUrl>https://github.com/yinyue200/LottieSkiaSharp</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Path.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.9.7" />
+    <PackageReference Include="Avalonia.Skia" Version="0.9.7" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="15.8.168" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+<!--    <PackageReference Include="SkiaSharp.Views.Forms" Version="1.68.2-preview.60" />-->
+<!--    <PackageReference Include="SkiaSharp" Version="1.68.2-preview.60" />-->
+    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
+  </ItemGroup>
+
+</Project>

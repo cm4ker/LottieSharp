@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
-using SharpDX;
 using Newtonsoft.Json;
 
 namespace LottieSharp.Parser
@@ -10,27 +9,24 @@ namespace LottieSharp.Parser
     internal static class JsonUtils
     {
         /// <summary>
-        /// [r,g,b]
+        ///     [r,g,b]
         /// </summary>
         /// <param name="reader"></param>
         /// <returns></returns>
         internal static Color JsonToColor(JsonReader reader)
         {
             reader.BeginArray();
-            var r = (byte)(reader.NextDouble() * 255);
-            var g = (byte)(reader.NextDouble() * 255);
-            var b = (byte)(reader.NextDouble() * 255);
-            while (reader.HasNext())
-            {
-                reader.SkipValue();
-            }
+            var r = (byte) (reader.NextDouble() * 255);
+            var g = (byte) (reader.NextDouble() * 255);
+            var b = (byte) (reader.NextDouble() * 255);
+            while (reader.HasNext()) reader.SkipValue();
             reader.EndArray();
-            return Color.FromArgb(255, r, g, b );
+            return Color.FromArgb(255, r, g, b);
         }
 
         internal static List<Vector2> JsonToPoints(JsonReader reader, float scale)
         {
-            List<Vector2> points = new List<Vector2>();
+            var points = new List<Vector2>();
 
             reader.BeginArray();
             while (reader.Peek() == JsonToken.StartArray)
@@ -39,6 +35,7 @@ namespace LottieSharp.Parser
                 points.Add(JsonToPoint(reader, scale));
                 reader.EndArray();
             }
+
             reader.EndArray();
             return points;
         }
@@ -58,12 +55,9 @@ namespace LottieSharp.Parser
 
         private static Vector2 JsonNumbersToPoint(JsonReader reader, float scale)
         {
-            float x = reader.NextDouble();
-            float y = reader.NextDouble();
-            while (reader.HasNext())
-            {
-                reader.SkipValue();
-            }
+            var x = reader.NextDouble();
+            var y = reader.NextDouble();
+            while (reader.HasNext()) reader.SkipValue();
             return new Vector2(x * scale, y * scale);
         }
 
@@ -74,21 +68,17 @@ namespace LottieSharp.Parser
             reader.BeginArray();
             x = reader.NextDouble();
             y = reader.NextDouble();
-            while (reader.Peek() != JsonToken.EndArray)
-            {
-                reader.SkipValue();
-            }
+            while (reader.Peek() != JsonToken.EndArray) reader.SkipValue();
             reader.EndArray();
             return new Vector2(x * scale, y * scale);
         }
 
         private static Vector2 JsonObjectToPoint(JsonReader reader, float scale)
         {
-            float x = 0f;
-            float y = 0f;
+            var x = 0f;
+            var y = 0f;
             reader.BeginObject();
             while (reader.HasNext())
-            {
                 switch (reader.NextName())
                 {
                     case "x":
@@ -101,14 +91,14 @@ namespace LottieSharp.Parser
                         reader.SkipValue();
                         break;
                 }
-            }
+
             reader.EndObject();
             return new Vector2(x * scale, y * scale);
         }
 
         internal static float ValueFromObject(JsonReader reader)
         {
-            JsonToken token = reader.Peek();
+            var token = reader.Peek();
             switch (token)
             {
                 case JsonToken.Integer:
@@ -116,11 +106,8 @@ namespace LottieSharp.Parser
                     return reader.NextDouble();
                 case JsonToken.StartArray:
                     reader.BeginArray();
-                    float val = reader.NextDouble();
-                    while (reader.HasNext())
-                    {
-                        reader.SkipValue();
-                    }
+                    var val = reader.NextDouble();
+                    while (reader.HasNext()) reader.SkipValue();
                     reader.EndArray();
                     return val;
                 default:

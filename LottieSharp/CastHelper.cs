@@ -1,6 +1,5 @@
 using System.Drawing;
 using System.Numerics;
-using System.Runtime.InteropServices.WindowsRuntime;
 using SharpDX.Mathematics.Interop;
 
 namespace LottieSharp

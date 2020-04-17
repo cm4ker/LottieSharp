@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
-using SharpDX;
 using LottieSharp.Value;
 using LottieSharp.Animation.Keyframe;
-using SharpDX;
 
 namespace LottieSharp.Model.Animatable
 {

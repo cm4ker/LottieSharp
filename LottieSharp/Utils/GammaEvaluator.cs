@@ -1,5 +1,4 @@
-﻿using SharpDX;
-using System;
+﻿using System;
 using System.Drawing;
 
 namespace LottieSharp.Utils

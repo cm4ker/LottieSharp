@@ -1,7 +1,5 @@
 ﻿using System.Numerics;
-using SharpDX;
 using LottieSharp.Utils;
-using SharpDX;
 
 namespace LottieSharp.Value
 {

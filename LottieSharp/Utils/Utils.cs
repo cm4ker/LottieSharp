@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Numerics;
-using SharpDX;
 using LottieSharp.Animation.Content;
 
 //TODO: OID: Totally replaced with new file

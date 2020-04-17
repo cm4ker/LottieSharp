@@ -2,8 +2,6 @@
 using LottieSharp.Network;
 using LottieSharp.Parser;
 using LottieSharp.Utils;
-using SharpDX.Direct2D1;
-using SharpDX.WIC;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,6 +9,8 @@ using System.IO.Compression;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using SharpDX.Direct2D1;
+using SharpDX.WIC;
 
 namespace LottieSharp
 {

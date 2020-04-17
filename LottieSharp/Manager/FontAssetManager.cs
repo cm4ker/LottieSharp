@@ -1,6 +1,6 @@
-﻿using SharpDX.DirectWrite;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using SharpDX.DirectWrite;
 
 namespace LottieSharp.Manager
 {

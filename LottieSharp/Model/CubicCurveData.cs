@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using SharpDX;
 
 namespace LottieSharp.Model
 {

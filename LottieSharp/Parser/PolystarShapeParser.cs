@@ -1,16 +1,15 @@
 ﻿using System.Numerics;
-using SharpDX;
 using LottieSharp.Model.Animatable;
 using LottieSharp.Model.Content;
 
 namespace LottieSharp.Parser
 {
-    static class PolystarShapeParser
+    internal static class PolystarShapeParser
     {
         internal static PolystarShape Parse(JsonReader reader, LottieComposition composition)
         {
             string name = null;
-            PolystarShape.Type type = PolystarShape.Type.Polygon;
+            var type = PolystarShape.Type.Polygon;
             AnimatableFloatValue points = null;
             IAnimatableValue<Vector2?, Vector2?> position = null;
             AnimatableFloatValue rotation = null;
@@ -20,14 +19,13 @@ namespace LottieSharp.Parser
             AnimatableFloatValue innerRoundedness = null;
 
             while (reader.HasNext())
-            {
                 switch (reader.NextName())
                 {
                     case "nm":
                         name = reader.NextString();
                         break;
                     case "sy":
-                        type = (PolystarShape.Type)reader.NextInt();
+                        type = (PolystarShape.Type) reader.NextInt();
                         break;
                     case "pt":
                         points = AnimatableValueParser.ParseFloat(reader, composition, false);
@@ -54,9 +52,9 @@ namespace LottieSharp.Parser
                         reader.SkipValue();
                         break;
                 }
-            }
 
-            return new PolystarShape(name, type, points, position, rotation, innerRadius, outerRadius, innerRoundedness, outerRoundedness);
+            return new PolystarShape(name, type, points, position, rotation, innerRadius, outerRadius, innerRoundedness,
+                outerRoundedness);
         }
     }
 }

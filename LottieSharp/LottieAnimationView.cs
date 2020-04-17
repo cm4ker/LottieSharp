@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using SharpDX;
 using LottieSharp.Model;
 using LottieSharp.Value;
 using System.Windows.Controls;

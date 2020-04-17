@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Text.RegularExpressions;
-using SharpDX;
 using LottieSharp.Model;
 using LottieSharp.Model.Layer;
 using Font = LottieSharp.Model.Font;
@@ -13,22 +12,21 @@ namespace LottieSharp.Parser
         public static LottieComposition Parse(JsonReader reader)
         {
             var scale = Utils.Utils.DpScale();
-            float startFrame = 0f;
-            float endFrame = 0f;
-            float frameRate = 0f;
-            Dictionary<long, Layer> layerMap = new Dictionary<long, Layer>();
-            List<Layer> layers = new List<Layer>();
-            int width = 0;
-            int height = 0;
-            Dictionary<string, List<Layer>> precomps = new Dictionary<string, List<Layer>>();
-            Dictionary<string, LottieImageAsset> images = new Dictionary<string, LottieImageAsset>();
-            Dictionary<string, Font> fonts = new Dictionary<string, Font>();
-            Dictionary<int, FontCharacter> characters = new Dictionary<int, FontCharacter>();
+            var startFrame = 0f;
+            var endFrame = 0f;
+            var frameRate = 0f;
+            var layerMap = new Dictionary<long, Layer>();
+            var layers = new List<Layer>();
+            var width = 0;
+            var height = 0;
+            var precomps = new Dictionary<string, List<Layer>>();
+            var images = new Dictionary<string, LottieImageAsset>();
+            var fonts = new Dictionary<string, Font>();
+            var characters = new Dictionary<int, FontCharacter>();
             var composition = new LottieComposition();
 
             reader.BeginObject();
             while (reader.HasNext())
-            {
                 switch (reader.NextName())
                 {
                     case "w":
@@ -53,9 +51,7 @@ namespace LottieSharp.Parser
                         var minorVersion = int.Parse(versions[1]);
                         var patchVersion = int.Parse(versions[2]);
                         if (!Utils.Utils.IsAtLeastVersion(majorVersion, minorVersion, patchVersion, 4, 4, 0))
-                        {
                             composition.AddWarning("Lottie only supports bodymovin >= 4.4.0");
-                        }
                         break;
                     case "layers":
                         ParseLayers(reader, composition, layers, layerMap);
@@ -73,41 +69,41 @@ namespace LottieSharp.Parser
                         reader.SkipValue();
                         break;
                 }
-            }
+
             reader.EndObject();
 
-            int scaledWidth = (int)(width * scale);
-            int scaledHeight = (int)(height * scale);
-            RectangleF bounds = new RectangleF(0, 0, scaledWidth, scaledHeight);
+            var scaledWidth = (int) (width * scale);
+            var scaledHeight = (int) (height * scale);
+            var bounds = new RectangleF(0, 0, scaledWidth, scaledHeight);
 
-            composition.Init(bounds, startFrame, endFrame, frameRate, layers, layerMap, precomps, images, characters, fonts);
+            composition.Init(bounds, startFrame, endFrame, frameRate, layers, layerMap, precomps, images, characters,
+                fonts);
 
             return composition;
         }
 
-        private static void ParseLayers(JsonReader reader, LottieComposition composition, List<Layer> layers, Dictionary<long, Layer> layerMap)
+        private static void ParseLayers(JsonReader reader, LottieComposition composition, List<Layer> layers,
+            Dictionary<long, Layer> layerMap)
         {
             var imageCount = 0;
             reader.BeginArray();
             while (reader.HasNext())
             {
                 var layer = LayerParser.Parse(reader, composition);
-                if (layer.GetLayerType() == Layer.LayerType.Image)
-                {
-                    imageCount++;
-                }
+                if (layer.GetLayerType() == Layer.LayerType.Image) imageCount++;
                 layers.Add(layer);
                 layerMap[layer.Id] = layer;
 
                 if (imageCount > 4)
-                {
-                    LottieLog.Warn($"You have {imageCount} images. Lottie should primarily be used with shapes. If you are using Adobe Illustrator, convert the Illustrator layers to shape layers.");
-                }
+                    LottieLog.Warn(
+                        $"You have {imageCount} images. Lottie should primarily be used with shapes. If you are using Adobe Illustrator, convert the Illustrator layers to shape layers.");
             }
+
             reader.EndArray();
         }
 
-        private static void ParseAssets(JsonReader reader, LottieComposition composition, Dictionary<string, List<Layer>> precomps, Dictionary<string, LottieImageAsset> images)
+        private static void ParseAssets(JsonReader reader, LottieComposition composition,
+            Dictionary<string, List<Layer>> precomps, Dictionary<string, LottieImageAsset> images)
         {
             reader.BeginArray();
             while (reader.HasNext())
@@ -123,7 +119,6 @@ namespace LottieSharp.Parser
                 string relativeFolder = null;
                 reader.BeginObject();
                 while (reader.HasNext())
-                {
                     switch (reader.NextName())
                     {
                         case "id":
@@ -137,6 +132,7 @@ namespace LottieSharp.Parser
                                 layerMap.Add(layer.Id, layer);
                                 layers.Add(layer);
                             }
+
                             reader.EndArray();
                             break;
                         case "w":
@@ -155,7 +151,7 @@ namespace LottieSharp.Parser
                             reader.SkipValue();
                             break;
                     }
-                }
+
                 reader.EndObject();
                 if (imageFileName != null)
                 {
@@ -168,6 +164,7 @@ namespace LottieSharp.Parser
                     precomps.Add(id, layers);
                 }
             }
+
             reader.EndArray();
         }
 
@@ -175,7 +172,6 @@ namespace LottieSharp.Parser
         {
             reader.BeginObject();
             while (reader.HasNext())
-            {
                 switch (reader.NextName())
                 {
                     case "list":
@@ -185,17 +181,19 @@ namespace LottieSharp.Parser
                             var font = FontParser.Parse(reader);
                             fonts.Add(font.Name, font);
                         }
+
                         reader.EndArray();
                         break;
                     default:
                         reader.SkipValue();
                         break;
                 }
-            }
+
             reader.EndObject();
         }
 
-        private static void ParseChars(JsonReader reader, LottieComposition composition, Dictionary<int, FontCharacter> characters)
+        private static void ParseChars(JsonReader reader, LottieComposition composition,
+            Dictionary<int, FontCharacter> characters)
         {
             reader.BeginArray();
             while (reader.HasNext())
@@ -203,6 +201,7 @@ namespace LottieSharp.Parser
                 var character = FontCharacterParser.Parse(reader, composition);
                 characters.Add(character.GetHashCode(), character);
             }
+
             reader.EndArray();
         }
     }

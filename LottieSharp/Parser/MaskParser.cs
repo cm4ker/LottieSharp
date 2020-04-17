@@ -4,18 +4,18 @@ using LottieSharp.Model.Content;
 
 namespace LottieSharp.Parser
 {
-    static class MaskParser
+    internal static class MaskParser
     {
         internal static Mask Parse(JsonReader reader, LottieComposition composition)
         {
-            Mask.MaskMode maskMode = Mask.MaskMode.MaskModeAdd;
+            var maskMode = Mask.MaskMode.MaskModeAdd;
             AnimatableShapeValue maskPath = null;
             AnimatableIntegerValue opacity = null;
 
             reader.BeginObject();
             while (reader.HasNext())
             {
-                string mode = reader.NextName();
+                var mode = reader.NextName();
                 switch (mode)
                 {
                     case "mode":
@@ -28,7 +28,8 @@ namespace LottieSharp.Parser
                                 maskMode = Mask.MaskMode.MaskModeSubtract;
                                 break;
                             case "i":
-                                composition.AddWarning("Animation contains intersect masks. They are not supported but will be treated like add masks.");
+                                composition.AddWarning(
+                                    "Animation contains intersect masks. They are not supported but will be treated like add masks.");
                                 maskMode = Mask.MaskMode.MaskModeIntersect;
                                 break;
                             default:
@@ -36,6 +37,7 @@ namespace LottieSharp.Parser
                                 maskMode = Mask.MaskMode.MaskModeAdd;
                                 break;
                         }
+
                         break;
                     case "pt":
                         maskPath = AnimatableValueParser.ParseShapeData(reader, composition);
@@ -48,6 +50,7 @@ namespace LottieSharp.Parser
                         break;
                 }
             }
+
             reader.EndObject();
 
             return new Mask(maskMode, maskPath, opacity);

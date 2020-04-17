@@ -1,5 +1,6 @@
 using SharpDX.Direct2D1;
 
+
 namespace LottieSharp.Animation.Content
 {
     internal abstract class Gradient : Shader

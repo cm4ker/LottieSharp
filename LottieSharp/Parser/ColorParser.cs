@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using SharpDX;
 using Newtonsoft.Json;
 
 namespace LottieSharp.Parser
@@ -10,19 +9,13 @@ namespace LottieSharp.Parser
 
         public Color? Parse(JsonReader reader, float scale)
         {
-            bool isArray = reader.Peek() == JsonToken.StartArray;
-            if (isArray)
-            {
-                reader.BeginArray();
-            }
+            var isArray = reader.Peek() == JsonToken.StartArray;
+            if (isArray) reader.BeginArray();
             var r = reader.NextDouble();
             var g = reader.NextDouble();
             var b = reader.NextDouble();
             var a = reader.NextDouble();
-            if (isArray)
-            {
-                reader.EndArray();
-            }
+            if (isArray) reader.EndArray();
 
             if (r <= 1 && g <= 1 && b <= 1 && a <= 1)
             {
@@ -31,9 +24,9 @@ namespace LottieSharp.Parser
                 b *= 255;
                 a *= 255;
             }
-            
-            
-            return Color.FromArgb((byte)a, (byte)r, (byte)g, (byte)b);
+
+
+            return Color.FromArgb((byte) a, (byte) r, (byte) g, (byte) b);
         }
     }
 }

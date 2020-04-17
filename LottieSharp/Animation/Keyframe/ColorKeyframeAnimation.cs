@@ -2,7 +2,6 @@
 using System.Drawing;
 using LottieSharp.Utils;
 using LottieSharp.Value;
-using SharpDX;
 
 namespace LottieSharp.Animation.Keyframe
 {

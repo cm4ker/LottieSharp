@@ -10,7 +10,6 @@ namespace LottieSharp.Parser
 
             reader.BeginObject();
             while (reader.HasNext())
-            {
                 switch (reader.NextName())
                 {
                     case "a":
@@ -20,17 +19,16 @@ namespace LottieSharp.Parser
                         reader.SkipValue();
                         break;
                 }
-            }
+
             reader.EndObject();
             if (anim == null)
-            {
                 // Not sure if this is possible. 
                 return new AnimatableTextProperties(null, null, null, null);
-            }
             return anim;
         }
 
-        private static AnimatableTextProperties ParseAnimatableTextProperties(JsonReader reader, LottieComposition composition)
+        private static AnimatableTextProperties ParseAnimatableTextProperties(JsonReader reader,
+            LottieComposition composition)
         {
             AnimatableColorValue color = null;
             AnimatableColorValue stroke = null;
@@ -39,7 +37,6 @@ namespace LottieSharp.Parser
 
             reader.BeginObject();
             while (reader.HasNext())
-            {
                 switch (reader.NextName())
                 {
                     case "fc":
@@ -58,7 +55,7 @@ namespace LottieSharp.Parser
                         reader.SkipValue();
                         break;
                 }
-            }
+
             reader.EndObject();
 
             return new AnimatableTextProperties(color, stroke, strokeWidth, tracking);
