@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ZipFile = Ionic.Zip.ZipFile;
 
 namespace LottieSharp.Network
 {

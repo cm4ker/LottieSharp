@@ -1,4 +1,5 @@
-﻿using SharpDX;
+﻿using System.Drawing;
+using SharpDX;
 using Newtonsoft.Json;
 
 namespace LottieSharp.Parser
@@ -30,7 +31,9 @@ namespace LottieSharp.Parser
                 b *= 255;
                 a *= 255;
             }
-            return new Color((byte)r, (byte)g, (byte)b, (byte)a);
+            
+            
+            return Color.FromArgb((byte)a, (byte)r, (byte)g, (byte)b);
         }
     }
 }

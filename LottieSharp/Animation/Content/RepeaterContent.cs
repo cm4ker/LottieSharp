@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using SharpDX;
 using LottieSharp.Animation.Keyframe;
 using LottieSharp.Model;

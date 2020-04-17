@@ -1,4 +1,5 @@
-﻿using SharpDX;
+﻿using System.Numerics;
+using SharpDX;
 using LottieSharp.Value;
 using LottieSharp.Animation.Keyframe;
 using Newtonsoft.Json;

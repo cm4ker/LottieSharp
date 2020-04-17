@@ -1,4 +1,5 @@
-
+using System;
+using System.Drawing;
 using SharpDX;
 using SharpDX.Direct2D1;
 
@@ -33,8 +34,13 @@ namespace LottieSharp.Animation.Content
             set
             {
                 var color = Color;
-                color.A = value;
-                Color = color;
+
+                var bytes = BitConverter.GetBytes(color.ToArgb());
+                var aBytes = BitConverter.GetBytes(value);
+
+                aBytes.CopyTo(bytes, 0);
+
+                Color = Color.FromArgb(BitConverter.ToInt32(bytes));
             }
         }
 

@@ -57,11 +57,11 @@ namespace LottieSharp.Sample
 
         private void LoadImageAssetsFolder_Click(object sender, RoutedEventArgs e)
         {
-            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
-            {
-                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    ImageAssetsFolderTextBox.Text = dialog.SelectedPath;
-            }
+            // using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            // {
+            //     if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            //         ImageAssetsFolderTextBox.Text = dialog.SelectedPath;
+            // }
         }
 
         private void DeleteImageAssetsFolder_Click(object sender, RoutedEventArgs e)

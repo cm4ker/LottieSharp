@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using SharpDX;
 using LottieSharp.Model.Content;
 using LottieSharp.Utils;
@@ -49,14 +50,17 @@ namespace LottieSharp.Parser
             {
                 reader.BeginArray();
             }
+
             while (reader.HasNext())
             {
                 array.Add(reader.NextDouble());
             }
+
             if (isArray)
             {
                 reader.EndArray();
             }
+
             if (_colorPoints == -1)
             {
                 _colorPoints = array.Count / 4;
@@ -75,17 +79,17 @@ namespace LottieSharp.Parser
                 {
                     case 0:
                         // position 
-                        positions[colorIndex] = (float)value;
+                        positions[colorIndex] = (float) value;
                         break;
                     case 1:
-                        r = (byte)(value * 255);
+                        r = (byte) (value * 255);
                         break;
                     case 2:
-                        g = (byte)(value * 255);
+                        g = (byte) (value * 255);
                         break;
                     case 3:
-                        byte b = (byte)(value * 255);
-                        colors[colorIndex] = new Color(r, g, b, (byte)255);
+                        byte b = (byte) (value * 255);
+                        colors[colorIndex] = Color.FromArgb((byte) 255, r, g, b);
                         break;
                 }
             }
@@ -132,11 +136,8 @@ namespace LottieSharp.Parser
             for (int i = 0; i < gradientColor.Size; i++)
             {
                 Color color = gradientColor.Colors[i];
-                color = new Color(GetOpacityAtPosition(gradientColor.Positions[i], positions, opacities),
-                    color.R,
-                    color.G,
-                    color.B
-                );
+                color = Color.FromArgb((byte) GetOpacityAtPosition(gradientColor.Positions[i], positions, opacities),
+                    (byte) color.R, (byte) color.G, (byte) color.B);
                 gradientColor.Colors[i] = color;
             }
         }
@@ -150,10 +151,11 @@ namespace LottieSharp.Parser
                 if (positions[i] >= position)
                 {
                     double progress = (position - lastPosition) / (thisPosition - lastPosition);
-                    return (byte)(255 * MiscUtils.Lerp(opacities[i - 1], opacities[i], progress));
+                    return (byte) (255 * MiscUtils.Lerp(opacities[i - 1], opacities[i], progress));
                 }
             }
-            return (byte)(255 * opacities[opacities.Length - 1]);
+
+            return (byte) (255 * opacities[opacities.Length - 1]);
         }
     }
 }

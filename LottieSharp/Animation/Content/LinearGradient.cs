@@ -1,7 +1,10 @@
 using SharpDX;
 using System;
+using System.Drawing;
+using System.Numerics;
 using SharpDX.Direct2D1;
 using SharpDX;
+using Brush = SharpDX.Direct2D1.Brush;
 
 namespace LottieSharp.Animation.Content
 {
@@ -25,7 +28,7 @@ namespace LottieSharp.Animation.Content
             {
                 _canvasGradientStopCollection[i] = new GradientStop
                 {
-                    Color = colors[i],
+                    Color = colors[i].ToRaw(),
                     Position = positions[i]
                 };
             }
@@ -42,12 +45,11 @@ namespace LottieSharp.Animation.Content
                 endPoint = LocalMatrix.Transform(endPoint);
 
                 _canvasLinearGradientBrush = new LinearGradientBrush(renderTarget, new LinearGradientBrushProperties
-                {
-                    StartPoint = startPoint,
-                    EndPoint = endPoint,
-                }
-                , new GradientStopCollection(renderTarget, _canvasGradientStopCollection, Gamma.Linear, ExtendMode.Clamp));
-
+                    {
+                        StartPoint = startPoint.ToRaw(),
+                        EndPoint = endPoint.ToRaw(),
+                    }
+                    , new GradientStopCollection(renderTarget, _canvasGradientStopCollection, Gamma.Linear, ExtendMode.Clamp));
             }
 
             _canvasLinearGradientBrush.Opacity = alpha / 255f;

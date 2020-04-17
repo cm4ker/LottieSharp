@@ -1,4 +1,5 @@
-﻿using SharpDX;
+﻿using System.Numerics;
+using SharpDX;
 using LottieSharp.Utils;
 using SharpDX;
 

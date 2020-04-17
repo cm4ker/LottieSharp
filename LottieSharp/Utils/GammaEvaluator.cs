@@ -1,5 +1,6 @@
 ﻿using SharpDX;
 using System;
+using System.Drawing;
 
 namespace LottieSharp.Utils
 {
@@ -18,7 +19,7 @@ namespace LottieSharp.Utils
         private static float OECF_sRGB(float linear)
         {
             // IEC 61966-2-1:1999
-            return linear <= 0.0031308f ? linear * 12.92f : (float)(Math.Pow(linear, 1.0f / 2.4f) * 1.055f - 0.055f);
+            return linear <= 0.0031308f ? linear * 12.92f : (float) (Math.Pow(linear, 1.0f / 2.4f) * 1.055f - 0.055f);
         }
 
         // Electro-optical conversion function for the sRGB color space
@@ -26,7 +27,7 @@ namespace LottieSharp.Utils
         private static float EOCF_sRGB(float srgb)
         {
             // IEC 61966-2-1:1999
-            return srgb <= 0.04045f ? srgb / 12.92f : (float)Math.Pow((srgb + 0.055f) / 1.055f, 2.4f);
+            return srgb <= 0.04045f ? srgb / 12.92f : (float) Math.Pow((srgb + 0.055f) / 1.055f, 2.4f);
         }
 
         internal static Color Evaluate(float fraction, Color startColor, Color endColor)
@@ -52,8 +53,8 @@ namespace LottieSharp.Utils
         //}
 
         static Color Evaluate(float fraction,
-                float startA, float startR, float startG, float startB,
-                float endA, float endR, float endG, float endB)
+            float startA, float startR, float startG, float startB,
+            float endA, float endR, float endG, float endB)
         {
             // convert from sRGB to linear
             startR = EOCF_sRGB(startR);
@@ -76,7 +77,9 @@ namespace LottieSharp.Utils
             g = OECF_sRGB(g) * 255.0f;
             b = OECF_sRGB(b) * 255.0f;
 
-            return new Color((byte)Math.Round(r), (byte)Math.Round(g), (byte)Math.Round(b), (byte)Math.Round(a));
+
+            return Color.FromArgb((byte) Math.Round(a), (byte) Math.Round(r), (byte) Math.Round(g),
+                (byte) Math.Round(b));
         }
     }
 }

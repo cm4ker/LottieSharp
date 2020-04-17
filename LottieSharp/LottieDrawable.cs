@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Controls;
 using LottieSharp.WpfSurface;
@@ -13,6 +14,7 @@ using LottieSharp.Utils;
 using LottieSharp.Value;
 using SharpDX;
 using SharpDX.Direct2D1;
+using Bitmap = SharpDX.Direct2D1.Bitmap;
 
 namespace LottieSharp
 {

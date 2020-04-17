@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using SharpDX;
 using LottieSharp.Value;
 using LottieSharp.Model.Animatable;

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Numerics;
 using SharpDX;
 using Newtonsoft.Json;
 
@@ -23,7 +25,7 @@ namespace LottieSharp.Parser
                 reader.SkipValue();
             }
             reader.EndArray();
-            return new Color(r, g, b, (byte)255);
+            return Color.FromArgb(255, r, g, b );
         }
 
         internal static List<Vector2> JsonToPoints(JsonReader reader, float scale)

@@ -5,12 +5,13 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using SharpDX;
-using SharpDX.Direct2D1;
 using LottieSharp.Model;
 using LottieSharp.Value;
 using System.Windows.Controls;
 using System.Windows;
 using System.ComponentModel;
+using System.Drawing;
+using Bitmap = SharpDX.Direct2D1.Bitmap;
 
 namespace LottieSharp
 {

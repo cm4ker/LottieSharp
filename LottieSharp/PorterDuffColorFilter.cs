@@ -1,6 +1,7 @@
-﻿using SharpDX;
+﻿using System.Drawing;
+using SharpDX;
 using LottieSharp.Animation.Content;
-using SharpDX.Direct2D1;
+using Brush = SharpDX.Direct2D1.Brush;
 
 namespace LottieSharp
 {

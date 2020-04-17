@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using LottieSharp.Utils;
 using LottieSharp.Value;
 using SharpDX;

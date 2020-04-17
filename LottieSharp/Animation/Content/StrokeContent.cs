@@ -1,4 +1,5 @@
-﻿using LottieSharp.Animation.Keyframe;
+﻿using System.Drawing;
+using LottieSharp.Animation.Keyframe;
 using LottieSharp.Model;
 using LottieSharp.Model.Content;
 using LottieSharp.Model.Layer;
